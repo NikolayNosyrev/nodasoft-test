@@ -27,7 +27,7 @@ class UserFactory
         return $users;
     }
 
-    public function createWithIdBasedOnOld(int $id, User $user)
+    public function createWithIdBasedOnOld(int $id, User $user): User
     {
         return new User(
             $id,

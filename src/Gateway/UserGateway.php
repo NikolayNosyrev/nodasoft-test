@@ -13,7 +13,7 @@ class UserGateway
         $this->pdo = $pdo;
     }
 
-    public function findNoYoungerThan(int $ageFrom, int $limit)
+    public function findNoYoungerThan(int $ageFrom, int $limit): array
     {
         $stmt = $this->pdo->prepare(
             "SELECT id, first_name, last_name, age, address, settings
@@ -28,7 +28,7 @@ class UserGateway
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function findByNames(array $names, int $limit)
+    public function findByNames(array $names, int $limit): array
     {
         $names = array_values($names);
 
