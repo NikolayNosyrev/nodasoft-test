@@ -37,6 +37,8 @@ class UserManager
 
     public function saveMultiple(array $users): array
     {
+        $users = array_values($users);
+
         $ids = $this->userGateway->saveMultiple($users);
 
         $newUsers = [];
