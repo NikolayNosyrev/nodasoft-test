@@ -15,7 +15,7 @@ class UserGateway
 
     public function findNoYoungerThan(int $ageFrom)
     {
-        $stmt = $this->pdo->prepare("SELECT id, first_name, last_name, age, settings FROM user WHERE age >= :age_from LIMIT 10");
+        $stmt = $this->pdo->prepare("SELECT id, first_name, last_name, age, address, settings FROM user WHERE age >= :age_from LIMIT 10");
         $stmt->bindParam(':age_from', $ageFrom, \PDO::PARAM_INT);
         $stmt->execute();
 
@@ -32,7 +32,7 @@ class UserGateway
         }
         $inQuery = implode(',', $in);
 
-        $query = sprintf("SELECT DISTINCT id, first_name, last_name, age, settings FROM user WHERE first_name IN (%s) OR last_name IN (%s)", $inQuery, $inQuery);
+        $query = sprintf("SELECT DISTINCT id, first_name, last_name, age, address, settings FROM user WHERE first_name IN (%s) OR last_name IN (%s)", $inQuery, $inQuery);
 
         $stmt = $this->pdo->prepare($query);
 
@@ -47,8 +47,14 @@ class UserGateway
 
     public function save(User $user): int
     {
-        $stmt = $this->pdo->prepare("INSERT INTO user (first_name, last_name, age) VALUES (:first_name, :last_name, :age)");
-        $stmt->execute([':first_name' => $user->getFirstName(), ':last_name' => $user->getLastName(), ':age' => $user->getAge()]);
+        $stmt = $this->pdo->prepare("INSERT INTO user (first_name, last_name, age, address, settings) VALUES (:first_name, :last_name, :age, :address, :settings)");
+        $stmt->execute([
+            ':first_name' => $user->getFirstName(),
+            ':last_name' => $user->getLastName(),
+            ':age' => $user->getAge(),
+            ':address' => $user->getAddress(),
+            ':settings' => json_encode($user->getSettings())
+        ]);
 
         return (int)$this->pdo->lastInsertId();
     }

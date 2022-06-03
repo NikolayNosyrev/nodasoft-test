@@ -13,7 +13,8 @@ class UserFactory
             $userData['first_name'],
             $userData['last_name'],
             $userData['age'],
-            !empty($userData['settings']) ? $userData['settings'] : []
+            $userData['address'],
+            !empty($userData['settings']) ? json_decode($userData['settings'], true) : []
         );
     }
 
@@ -33,6 +34,7 @@ class UserFactory
             $user->getFirstName(),
             $user->getLastName(),
             $user->getAge(),
+            $user->getAddress(),
             $user->getSettings()
         );
     }

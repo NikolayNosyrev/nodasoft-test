@@ -17,13 +17,14 @@ $userGateway = new UserGateway($pdo);
 $userManager = new UserManager($userGateway, new UserFactory());
 
 //$users = $userManager->findNoYoungerThan(2);
-//$users = $userManager->findByNames(['lastnames', 'firstname']);
-//var_dump($users);
+$users = $userManager->findByNames(['ccc', 'xxx']);
+var_dump($users);
+exit;
 
-$result = $userManager->saveMultiple([
-    new User(null, 'sss', 'xxx', 10, ['test' => 5]),
-    new User(null, 'aaa', 'bbb', 40),
-    new User(null, 'ccc', 'ddd', 20, ['test' => 15]),
+$users = $userManager->saveMultiple([
+    new User(null, 'sss', 'xxx', 10, 'address1', ['test' => 5]),
+    new User(null, 'aaa', 'bbb', 40, 'address2'),
+    new User(null, 'ccc', 'ddd', 20, 'address3', ['test' => 15]),
 ]);
 
-var_dump($result); exit;
+var_dump($users); exit;
