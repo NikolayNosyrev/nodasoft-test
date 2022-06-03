@@ -3,19 +3,20 @@
 namespace App\Gateway;
 
 use App\DTO\User;
+use App\PDOProxy;
 
 class UserGateway
 {
-    private $pdo;
+    private $pdoProxy;
 
-    public function __construct(\PDO $pdo)
+    public function __construct(PDOProxy $pdoProxy)
     {
-        $this->pdo = $pdo;
+        $this->pdoProxy = $pdoProxy;
     }
 
     public function findNoYoungerThan(int $ageFrom, int $limit): array
     {
-        $stmt = $this->pdo->prepare(
+        $stmt = $this->pdoProxy->prepare(
             "SELECT id, first_name, last_name, age, address, settings
             FROM user
             WHERE age >= :age_from
@@ -44,7 +45,7 @@ class UserGateway
             WHERE first_name IN (%s) OR last_name IN (%s)
             LIMIT :limit", $inQuery, $inQuery);
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdoProxy->prepare($query);
         $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
 
         foreach ($names as $key => $name) {
@@ -58,7 +59,7 @@ class UserGateway
 
     public function save(User $user): int
     {
-        $stmt = $this->pdo->prepare(
+        $stmt = $this->pdoProxy->prepare(
             "INSERT INTO user
             (first_name, last_name, age, address, settings)
             VALUES
@@ -72,7 +73,7 @@ class UserGateway
             ':settings' => json_encode($user->getSettings())
         ]);
 
-        return (int)$this->pdo->lastInsertId();
+        return (int)$this->pdoProxy->lastInsertId();
     }
 
     public function saveMultiple(array $users): array
