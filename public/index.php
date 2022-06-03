@@ -19,7 +19,7 @@ $userGateway = new UserGateway($pdoProxy);
 
 $userManager = new UserManager($userGateway, new UserFactory());
 
-//$users = $userManager->findNoYoungerThan(15);
+//$users = $userManager->findNoYoungerThan(25);
 //var_dump($users);
 //exit;
 
@@ -34,3 +34,4 @@ $users = $userManager->saveMultiple([
     new User(null, 'ccc', 'ddd', 20, 'address3', ['test' => 15]),
 ]);
 var_dump($users);
+exit;
