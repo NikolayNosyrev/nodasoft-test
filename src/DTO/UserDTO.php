@@ -14,7 +14,7 @@ class UserDTO
 
     private $settings;
 
-    public function __construct(?int $id, string $firstName, string $lastName, int $age, array $settings)
+    public function __construct(?int $id, string $firstName, string $lastName, int $age, array $settings = [])
     {
         $this->id = $id;
         $this->firstName = $firstName;
