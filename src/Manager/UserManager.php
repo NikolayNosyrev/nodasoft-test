@@ -11,6 +11,8 @@ class UserManager
 
     private $userFactory;
 
+    const LIMIT = 10;
+
     public function __construct(UserGateway $userGateway, UserFactory $userFactory)
     {
         $this->userGateway = $userGateway;
@@ -19,7 +21,7 @@ class UserManager
 
     public function findNoYoungerThan(int $ageFrom): array
     {
-        $usersData = $this->userGateway->findNoYoungerThan($ageFrom);
+        $usersData = $this->userGateway->findNoYoungerThan($ageFrom, self::LIMIT);
 
         $users = $this->userFactory->createArray($usersData);
 
@@ -28,7 +30,7 @@ class UserManager
 
     public function findByNames(array $names): array
     {
-        $usersData = $this->userGateway->findByNames($names);
+        $usersData = $this->userGateway->findByNames($names, self::LIMIT);
 
         $users = $this->userFactory->createArray($usersData);
 

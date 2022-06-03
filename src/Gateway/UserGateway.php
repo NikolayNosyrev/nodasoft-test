@@ -13,16 +13,22 @@ class UserGateway
         $this->pdo = $pdo;
     }
 
-    public function findNoYoungerThan(int $ageFrom)
+    public function findNoYoungerThan(int $ageFrom, int $limit)
     {
-        $stmt = $this->pdo->prepare("SELECT id, first_name, last_name, age, address, settings FROM user WHERE age >= :age_from LIMIT 10");
+        $stmt = $this->pdo->prepare(
+            "SELECT id, first_name, last_name, age, address, settings
+            FROM user
+            WHERE age >= :age_from
+            LIMIT :limit"
+        );
         $stmt->bindParam(':age_from', $ageFrom, \PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function findByNames(array $names)
+    public function findByNames(array $names, int $limit)
     {
         $names = array_values($names);
 
@@ -32,9 +38,14 @@ class UserGateway
         }
         $inQuery = implode(',', $in);
 
-        $query = sprintf("SELECT DISTINCT id, first_name, last_name, age, address, settings FROM user WHERE first_name IN (%s) OR last_name IN (%s)", $inQuery, $inQuery);
+        $query = sprintf(
+            "SELECT DISTINCT id, first_name, last_name, age, address, settings
+            FROM user
+            WHERE first_name IN (%s) OR last_name IN (%s)
+            LIMIT :limit", $inQuery, $inQuery);
 
         $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
 
         foreach ($names as $key => $name) {
             $stmt->bindValue(':name_' . $key, $name);
@@ -47,7 +58,12 @@ class UserGateway
 
     public function save(User $user): int
     {
-        $stmt = $this->pdo->prepare("INSERT INTO user (first_name, last_name, age, address, settings) VALUES (:first_name, :last_name, :age, :address, :settings)");
+        $stmt = $this->pdo->prepare(
+            "INSERT INTO user
+            (first_name, last_name, age, address, settings)
+            VALUES
+            (:first_name, :last_name, :age, :address, :settings)"
+        );
         $stmt->execute([
             ':first_name' => $user->getFirstName(),
             ':last_name' => $user->getLastName(),
