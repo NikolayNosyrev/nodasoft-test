@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Gateway;
 
 use App\DTO\User;
@@ -78,7 +80,7 @@ class UserGateway
 
     public function saveMultiple(array $users): array
     {
-        $this->pdo->beginTransaction();
+        $this->pdoProxy->beginTransaction();
 
         try {
             $ids = [];
@@ -86,12 +88,12 @@ class UserGateway
                 $ids[] = $this->save($user);
             }
 
-            $this->pdo->commit();
+            $this->pdoProxy->commit();
 
             return $ids;
 
         } catch (\Throwable $e) {
-            $this->pdo->rollBack();
+            $this->pdoProxy->rollBack();
             throw $e;
         }
     }

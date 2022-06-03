@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use App\DTO\User;
@@ -21,7 +23,7 @@ $userManager = new UserManager($userGateway, new UserFactory());
 //var_dump($users);
 //exit;
 
-$names = ['xxx']; // = $_GET['names']
+$names = ['xxx', 'ccc']; // = $_GET['names']
 $users = $userManager->findByNames($names);
 var_dump($users);
 exit;

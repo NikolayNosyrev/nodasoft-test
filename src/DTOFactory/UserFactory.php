@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTOFactory;
 
 use App\DTO\User;
@@ -9,10 +11,10 @@ class UserFactory
     public function create(array $userData): User
     {
         return new User(
-            !empty($userData['id']) ? $userData['id'] : null,
+            !empty($userData['id']) ? (int)$userData['id'] : null,
             $userData['first_name'],
             $userData['last_name'],
-            $userData['age'],
+            (int)$userData['age'],
             $userData['address'],
             !empty($userData['settings']) ? json_decode($userData['settings'], true) : []
         );
