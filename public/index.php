@@ -17,7 +17,10 @@ $userGateway = new UserGateway($pdo);
 $userManager = new UserManager($userGateway, new UserFactory());
 
 //$users = $userManager->findNoYoungerThan(2);
-$users = $userManager->findByNames(['ccc', 'xxx']);
+//var_dump($users);
+
+$names = ['ccc', 'xxx']; // = $_GET['names']
+$users = $userManager->findByNames($names);
 var_dump($users);
 exit;
 
@@ -26,5 +29,4 @@ $users = $userManager->saveMultiple([
     new User(null, 'aaa', 'bbb', 40, 'address2'),
     new User(null, 'ccc', 'ddd', 20, 'address3', ['test' => 15]),
 ]);
-
-var_dump($users); exit;
+var_dump($users);
