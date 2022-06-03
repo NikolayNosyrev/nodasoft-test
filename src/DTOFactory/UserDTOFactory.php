@@ -2,13 +2,13 @@
 
 namespace App\DTOFactory;
 
-use App\DTO\UserDTO;
+use App\DTO\User;
 
 class UserDTOFactory
 {
-    public function create(array $userData): UserDTO
+    public function create(array $userData): User
     {
-        return new UserDTO(
+        return new User(
             !empty($userData['id']) ? $userData['id'] : null,
             $userData['first_name'],
             $userData['last_name'],
@@ -26,9 +26,9 @@ class UserDTOFactory
         return $users;
     }
 
-    public function createWithIdBasedOnOld(int $id, UserDTO $user)
+    public function createWithIdBasedOnOld(int $id, User $user)
     {
-        return new UserDTO(
+        return new User(
             $id,
             $user->getFirstName(),
             $user->getLastName(),

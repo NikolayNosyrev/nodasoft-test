@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class UserDTO
+class User
 {
     private $id;
 

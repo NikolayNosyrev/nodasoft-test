@@ -2,7 +2,7 @@
 
 namespace App\Gateway;
 
-use App\DTO\UserDTO;
+use App\DTO\User;
 
 class UserGateway
 {
@@ -45,7 +45,7 @@ class UserGateway
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function save(UserDTO $user): int
+    public function save(User $user): int
     {
         $stmt = $this->pdo->prepare("INSERT INTO user (first_name, last_name, age) VALUES (:first_name, :last_name, :age)");
         $stmt->execute([':first_name' => $user->getFirstName(), ':last_name' => $user->getLastName(), ':age' => $user->getAge()]);

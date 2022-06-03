@@ -2,7 +2,7 @@
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use App\DTO\UserDTO;
+use App\DTO\User;
 use App\Gateway\UserGateway;
 use App\Manager\UserManager;
 use App\DTOFactory\UserDTOFactory;
@@ -21,9 +21,9 @@ $userManager = new UserManager($userGateway, new UserDTOFactory());
 //var_dump($users);
 
 $result = $userManager->saveMultiple([
-    new UserDTO(null, 'sss', 'xxx', 10, ['test' => 5]),
-    new UserDTO(null, 'aaa', 'bbb', 40),
-    new UserDTO(null, 'ccc', 'ddd', 20, ['test' => 15]),
+    new User(null, 'sss', 'xxx', 10, ['test' => 5]),
+    new User(null, 'aaa', 'bbb', 40),
+    new User(null, 'ccc', 'ddd', 20, ['test' => 15]),
 ]);
 
 var_dump($result); exit;
