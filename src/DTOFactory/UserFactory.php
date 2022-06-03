@@ -4,7 +4,7 @@ namespace App\DTOFactory;
 
 use App\DTO\User;
 
-class UserDTOFactory
+class UserFactory
 {
     public function create(array $userData): User
     {

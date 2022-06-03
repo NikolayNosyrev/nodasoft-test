@@ -2,26 +2,26 @@
 
 namespace App\Manager;
 
-use App\DTOFactory\UserDTOFactory;
+use App\DTOFactory\UserFactory;
 use App\Gateway\UserGateway;
 
 class UserManager
 {
     private $userGateway;
 
-    private $userDTOFactory;
+    private $userFactory;
 
-    public function __construct(UserGateway $userGateway, UserDTOFactory $userDTOFactory)
+    public function __construct(UserGateway $userGateway, UserFactory $userFactory)
     {
         $this->userGateway = $userGateway;
-        $this->userDTOFactory = $userDTOFactory;
+        $this->userFactory = $userFactory;
     }
 
     public function findNoYoungerThan(int $ageFrom): array
     {
         $usersData = $this->userGateway->findNoYoungerThan($ageFrom);
 
-        $users = $this->userDTOFactory->createArray($usersData);
+        $users = $this->userFactory->createArray($usersData);
 
         return $users;
     }
@@ -30,7 +30,7 @@ class UserManager
     {
         $usersData = $this->userGateway->findByNames($names);
 
-        $users = $this->userDTOFactory->createArray($usersData);
+        $users = $this->userFactory->createArray($usersData);
 
         return $users;
     }
@@ -41,7 +41,7 @@ class UserManager
 
         $newUsers = [];
         foreach ($ids as $key => $id) {
-            $newUsers[] = $this->userDTOFactory->createWithIdBasedOnOld($id, $users[$key]);
+            $newUsers[] = $this->userFactory->createWithIdBasedOnOld($id, $users[$key]);
         }
 
         return $newUsers;

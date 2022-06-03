@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 use App\DTO\User;
 use App\Gateway\UserGateway;
 use App\Manager\UserManager;
-use App\DTOFactory\UserDTOFactory;
+use App\DTOFactory\UserFactory;
 
 $dsn = 'mysql:dbname=nodasoft;host=127.0.0.1';
 $user = 'root';
@@ -14,7 +14,7 @@ $password = 'root';
 $pdo = new PDO($dsn, $user, $password);
 $userGateway = new UserGateway($pdo);
 
-$userManager = new UserManager($userGateway, new UserDTOFactory());
+$userManager = new UserManager($userGateway, new UserFactory());
 
 //$users = $userManager->findNoYoungerThan(2);
 //$users = $userManager->findByNames(['lastnames', 'firstname']);
